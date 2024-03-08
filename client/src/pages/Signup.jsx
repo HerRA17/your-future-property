@@ -9,14 +9,14 @@ export default function Signup() {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.value]: e.target.value,
+      [e.target.id]: e.target.value,
     });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
       setLoading(true);
-    const res = await fetch('/api/auth/signup', {
+      const res = await fetch('/api/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -39,14 +39,15 @@ export default function Signup() {
     
   };
   console.log(formData)
+  
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl text-center font-semibold'>Signup</h1>
       <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
         <input type='text' placeholder='username' 
-        className='border p-3 rounded-lg' id='email' onChange={handleChange} />
+        className='border p-3 rounded-lg' id='username' onChange={handleChange} />
         <input type='email' placeholder='email' 
-        className='border p-3 rounded-lg' id='username' onChange={handleChange}/>
+        className='border p-3 rounded-lg' id='email' onChange={handleChange}/>
         <input type='password' placeholder='password' 
         className='border p-3 rounded-lg' id='password' onChange={handleChange}/>
         <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg
