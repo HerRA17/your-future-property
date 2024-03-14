@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRouter from "./routes/user.route.js";
 import authRouter from "./routes/auth.route.js";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 process.env.MONGO = "mongodb+srv://hermannrasch93:Chispa1793@your-future-property.p2sazga.mongodb.net/?retryWrites=true&w=majority&appName=Your-Future-Property";
@@ -13,6 +14,8 @@ mongoose.connect(process.env.MONGO)
 const app = express();
 
 app.use(express.json());
+
+app.use(cookieParser());
 
 app.listen(3000, () => {
     console.log("Server running in server 3000");
