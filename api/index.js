@@ -6,7 +6,6 @@ import authRouter from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 dotenv.config();
 
-process.env.MONGO = "mongodb+srv://hermannrasch93:Chispa1793@your-future-property.p2sazga.mongodb.net/?retryWrites=true&w=majority&appName=Your-Future-Property";
 
 mongoose.connect(process.env.MONGO)
 .then(() => console.log("MongoDB connection successful!"))
