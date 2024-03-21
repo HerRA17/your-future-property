@@ -94,6 +94,7 @@ export default function Profile() {
       dispatch(deleteUserFailure(error.message))
     }
   };
+  
   const hanldeSignOut = async () => {
     try{
       dispatch(signoutUserStart());
