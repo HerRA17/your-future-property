@@ -6,6 +6,7 @@ import { updateUserStart, updateUserSuccess, updateUserFailure,
   deleteUserStart, deleteUserSuccess, deleteUserFailure,
   signoutUserStart, signoutUserSuccess, signoutUserFailure } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -16,12 +17,9 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const navigate = useNavigate();
   
-  console.log(filePerc);
-  console.log(file);
-  console.log(formData);
-  console.log(fileUploadError);
-
+  
   useEffect(() => {
     if(file) {
       handleFileUpload(file);
@@ -98,13 +96,22 @@ export default function Profile() {
   const hanldeSignOut = async () => {
     try{
       dispatch(signoutUserStart());
-      const res = await fetch("/api/auth/signout");
+      const res = await fetch("/api/auth/signout", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          "Pragma": "no-cache",
+          "Expires": "0"
+        }
+      });
       const data = await res.json();
       if (data.success === false) {
-        dispatch(signoutUserStart(data.message));
+        dispatch(signoutUserFailure(data.message));
         return;
       }
       dispatch(signoutUserSuccess(data));
+      navigate("/signin", { replace: true});
     } catch (error) {
       dispatch(signoutUserFailure(error.message));
     }
@@ -146,8 +153,8 @@ export default function Profile() {
           p-3 uppercase hover:opacity-95 disabled:opacity-80">{loading ? "Loading..." : "Update"}</button>
       </form>
       <div className="flex justify-between mt-5">
-        <span onClick={handleDeleteUser} className="text-red-700">Delete Account</span>
-        <span onClick={hanldeSignOut} className="text-red-700">Sign out</span>
+        <span onClick={handleDeleteUser} className="text-red-700 cursor-pointer">Delete Account</span>
+        <span onClick={hanldeSignOut} className="text-red-700 cursor-pointer">Sign out</span>
       </div>
       <p className="text-red-700 mt-5">{error ? error : ""}</p>
       <p className="text-green-700 mt-5">{updateSuccess ? "User successfully updated!" : ""}</p>
