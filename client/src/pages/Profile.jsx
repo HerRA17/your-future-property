@@ -4,7 +4,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 import { app } from "../firebase";
 import { updateUserStart, updateUserSuccess, updateUserFailure, 
   deleteUserStart, deleteUserSuccess, deleteUserFailure,
-  signoutUserStart, signoutUserSuccess, signoutUserFailure } from "../redux/user/userSlice";
+  signoutUserStart, signoutUserSuccess, signoutUserFailure, resetUser } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -111,6 +111,7 @@ export default function Profile() {
         return;
       }
       dispatch(signoutUserSuccess(data));
+      dispatch(resetUser());
       navigate("/signin", { replace: true});
     } catch (error) {
       dispatch(signoutUserFailure(error.message));
