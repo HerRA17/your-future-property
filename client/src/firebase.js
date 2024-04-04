@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBVxULIZUPFuaNPIoNvgJgl-Y4mTi4W1pU", //import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: "your-future-property.firebaseapp.com",
-  projectId: "your-future-property",
-  storageBucket: "your-future-property.appspot.com",
-  messagingSenderId: "64253758867",
-  appId: "1:64253758867:web:c101ecf59125fb0b872c66"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: "future-estate-51846.firebaseapp.com",
+  projectId: "future-estate-51846",
+  storageBucket: "future-estate-51846.appspot.com",
+  messagingSenderId: "137141965176",
+  appId: "1:137141965176:web:0cf657a09fe351eff5388d"
 };
 
 // Initialize Firebase
