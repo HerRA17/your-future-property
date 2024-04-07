@@ -24,7 +24,7 @@ app.listen(3000, () => {
 
  app.use("/api/user", userRouter);
  app.use("/api/auth", authRouter);
- app.use("/api/listings", listingRouter);
+ app.use("/api/listing", listingRouter);
 
 //  middleware
  app.use((err, req, res, next) => {
