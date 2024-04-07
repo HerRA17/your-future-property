@@ -40,7 +40,7 @@ export default function CreateListing() {
             }
             Promise.all(promises).then((urls) => {
                 console.log('All files uploaded sucessfully:', urls)
-                setFormData({ ...formData, imageURLs: formData.imageUrls.concat(urls) });
+                setFormData({ ...formData, imageUrls: formData.imageUrls.concat(urls) });
                 setImageUploadError(false);
                 setUploading(false);
             }).catch(() => {
@@ -116,7 +116,7 @@ export default function CreateListing() {
             if(+formData.regularPrice < +formData.discountPrice) return setError('Discount price most be lowwer than regular price')
             setLoading(true);
             setError(false);
-            const res = await fetch('/api/listing/create', {
+            const res = await fetch('/api/listings/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -134,13 +134,16 @@ export default function CreateListing() {
                 setError(data.message);
                 setLoading(false);
             }
-            navigate(`/listing/${data._id}`)
+            navigate(`/listings/${data._id}`)
+            console.log('Listing Created: ', data)
         } catch (error){
+            console.error('Submission error: ', error.message)
             setError(error.message);
             setLoading(false);
         }
     }
     console.log(currentUser);
+    console.log(files)
   return (
     <main className='p-3 max-w-4xl mx-auto'>
     <h1 className='text-3xl font-semibold text-center my-7'>Create Listing</h1>
@@ -215,25 +218,26 @@ export default function CreateListing() {
             </div>
         </div>
         <div className='flex flex-col flex-1 gap-4' id='column-right-bottmo'>
-            <p className='font-semibold'>Images:</p>
+            <p className='font-semibold'>Images:
             <span className='font-normal text-gray-600 ml-2'>The first image will be the cover (max 6)</span>
+            </p>
             <div className='flex gap-4'>
                 <input className='p-3 border border-gray-300 rounded w-full'
-                 onChange={(e)=> setFiles(e.target.files) } type='file' accept='images/*' multiple/>
-                <button onClick={handleImageSubmit} className='p-3 text-green-700 border-green-700 rounded 
+                 onChange={(e)=> setFiles(e.target.files) } type='file' accept='images/*' id='images' multiple/>
+                <button onClick={handleImageSubmit} className='p-3 text-green-700 border border-green-700 rounded 
                 uppercase hover:shadow-lg disabled:opacity-80' disabled={uploading}>
                     {uploading ? 'Uploading...' : 'Upload'}
                 </button>
             </div>
             <p className='text-red-700 text-sm'>{imageUploadError && imageUploadError}</p>
             {
-                formData.imageUrls.length > 0 && formData.imageUrls.map((url) => {
+                formData.imageUrls.length > 0 && formData.imageUrls.map((url, index) => (
                     <div className='flex justify-between p-3 border item-center' key={url}>
                     <img src={url} alt='listing-image' className='w-20 h-20 object-contain rounded-lg' />
                     <button className='h-3 text-red-700 rounded-lg uppercase hover:opacity-95' type='button'
                     onClick={() => handleRemoveImage(index)}>Delete</button>
                     </div>
-                })
+                ))
             }
             <button disabled={loading || uploading} className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80
         '>{loading ? 'Creating...' : 'Create Listing'}</button>
