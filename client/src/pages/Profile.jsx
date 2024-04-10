@@ -101,11 +101,6 @@ export default function Profile() {
       const res = await fetch("/api/auth/signout", {
         method: "GET",
         credentials: "include",
-        headers: {
-          "Cache-Control": "no-cache, no-store, must-revalidate",
-          "Pragma": "no-cache",
-          "Expires": "0"
-        }
       });
       const data = await res.json();
       if (data.success === false) {
@@ -145,11 +140,12 @@ export default function Profile() {
         console.log(data.message);
         return;
       }
-      setUserListings((prev) => prev.filter((lisiting) => lisiting._id !== listingId ));
+      setUserListings((prev) => prev.filter((listing) => listing._id !== listingId ));
     } catch(error) {
       console.log(error.message)
     }
   }
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -200,7 +196,7 @@ export default function Profile() {
           <h1 className="text-center my-7 text-2xl font-semibold">Your Listings</h1>
           {userListings.map((listing)=> 
           <div key={listing._id} className="border rounded-lg p-3 flex justify-between items-center gap-4">
-            <Link to={`/lisitng/${listing.id}`}>
+            <Link to={`/lisitng/${listing._id}`}>
               <img src={listing.imageUrls[0]} alt="listing cover" className="h-16 w-16 object-contain"/>
 
             </Link>
@@ -208,7 +204,9 @@ export default function Profile() {
               <p >{listing.name}</p>
             </Link>
             <div className="flex flex-col item-center"> 
-              <button className="text-green-700">Edit</button>
+              <Link to={`/update-listing/${listing._id}`}>            
+                <button className="text-green-700">Edit</button>
+              </Link>
               <button className="text-red-700" onClick={() => handleListingDelete(listing._id)}>Delete</button>
             </div>
           </div> 
