@@ -23,8 +23,12 @@ export default function ListingItem({listing}) {
                     {listing.type === 'rent' && ' / month'}
                 </p>
                 <div className='text-slate-700 flex gap-4'>
-                    <div className='font-bold text-xs'>{listing.bedrooms > 1 ? `${listing.bedrooms} Beds` : `${listing.bedrooms} Bed`}</div>
-                    <div className='font-bold text-xs'>{listing.bathrooms> 1 ? `${listing.bathrooms} Baths` : `${listing.bathrooms} Bath`}</div>
+                    <div className='font-bold text-xs'>
+                        {listing.bedrooms > 1 ? `${listing.bedrooms} Beds` : `${listing.bedrooms} Bed`}
+                    </div>
+                    <div className='font-bold text-xs'>
+                        {listing.bathrooms> 1 ? `${listing.bathrooms} Baths` : `${listing.bathrooms} Bath`}
+                    </div>
                 </div>
             </div>
         </Link>
