@@ -53,7 +53,7 @@ export default function CreateListing() {
             setUploading(false);
         }
     };
-    console.log(formData)
+
     const storeImage = async (file) => {
         return new Promise((resolve, reject) => {
             const storage = getStorage(app);
@@ -147,8 +147,7 @@ export default function CreateListing() {
             setLoading(false);
         }
     }
-    console.log(currentUser);
-    console.log(files)
+    
   return (
     <main className='p-3 max-w-4xl mx-auto'>
     <h1 className='text-3xl font-semibold text-center my-7'>Create Listing</h1>
