@@ -1,7 +1,5 @@
 import { useSelector } from "react-redux";
 import { useRef, useState, useEffect } from "react";
-// import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-// import { app } from "../firebase";
 import { updateUserStart, updateUserSuccess, updateUserFailure, 
   deleteUserStart, deleteUserSuccess, deleteUserFailure,
   signoutUserStart, signoutUserSuccess, signoutUserFailure, resetUser } from "../redux/user/userSlice";
