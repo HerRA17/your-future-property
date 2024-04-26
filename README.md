@@ -3,7 +3,7 @@
 * [Overview](#overview)
 * [Technologies Used](#technologies-used)
 * [Features](#features)
-+ [SetupAndInstallation](#setup-and-installation)
++ [Setup And Installation](#setup-and-installation)
 * [Deployment](#deployment)
 
 <a id="overview"></a>
@@ -56,29 +56,34 @@ To get Future Estate running locally, you'll need to follow these steps:
 
 ### Backend Setup
 Navigate to the api directory and install dependencies:
+```bash
 cd api
 npm install
-
+```
 Ensure you have a .env file in your api directory with all the required environment variables set (e.g., database URI, secret keys).
 
 ### Frontend Setup
 Navigate to the client directory and install dependencies:
+```bash
 cd client
 npm install
-
+```
 Start the development server:
+```bash
 npm run dev
-
+```
 Running the Application
 In the root directory, you can start both frontend and backend using:
+```bash
 npm start
-
+```
 This will concurrently run both parts of the application if set up in package.json under scripts.
 
 <a id="deployment"></a>
 ## Deployment
 Make sure to build your frontend application before deployment:
+```bash
 cd client
 npm run build
-
+```
 Configure your production environment to serve the build folder and redirect all requests to it to support client-side routing.
