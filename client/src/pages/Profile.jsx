@@ -1,20 +1,20 @@
 import { useSelector } from "react-redux";
 import { useRef, useState, useEffect } from "react";
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { app } from "../firebase";
+// import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+// import { app } from "../firebase";
 import { updateUserStart, updateUserSuccess, updateUserFailure, 
   deleteUserStart, deleteUserSuccess, deleteUserFailure,
   signoutUserStart, signoutUserSuccess, signoutUserFailure, resetUser } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useStorage } from "../hooks/useUsageStorageHook";
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const fileRef = useRef(null);
   const [file, setFile] = useState(undefined);
-  const [filePerc, setFilePerc] = useState(0);
-  const [fileUploadError, setFileUploadError] = useState(false);
+  const {uploadFile, filePerc, fileUploadError} = useStorage();
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
   const [updateSuccess, setUpdateSuccess] = useState(false);
@@ -27,28 +27,6 @@ export default function Profile() {
       handleFileUpload(file);
     }
   }, [file]);
-
-  const handleFileUpload = () => {
-    const storage = getStorage(app);
-    const fileName = new Date().getTime() + file.name;
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on('state_changed', (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      setFilePerc(Math.round(progress));
-    },
-    (error) => {
-    setFileUploadError(true);
-    },
-
-    () => {
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => 
-        setFormData({...formData, avatar: downloadURL })
-      );
-    }
-  );
-  };
 
   const handleChange = (e) => {
     setFormData({...formData, [e.target.id]:e.target.value });
